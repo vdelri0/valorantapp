@@ -3,6 +3,8 @@ import './App.css'; // Import CSS file for styling
 
 function App() {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,20 +34,69 @@ function App() {
     fetchData();
   }, []);
 
+  const filteredAgents = data.filter(agent => {
+    // Filter by search term
+    if (searchTerm && !agent.displayName.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return false;
+    }
+
+    // Filter by selected role
+    if (selectedRole && agent.role.displayName !== selectedRole) {
+      return false;
+    }
+
+    return true;
+  });
+
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleRoleChange = role => {
+    setSelectedRole(role);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Agents</h1>
+        <h1>One Tap</h1>
       </header>
+      <nav className="navbar">
+        <div className="search-bar">
+          <label htmlFor="search-input">Search:</label>
+          <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} />
+        </div>
+        <div className="role-navbar">
+          <button className="role-link" onClick={() => handleRoleChange('')}>
+            All
+          </button>
+          <button className="role-link" onClick={() => handleRoleChange('Duelist')}>
+            Duelist
+          </button>
+          <button className="role-link" onClick={() => handleRoleChange('Controller')}>
+            Controller
+          </button>
+          <button className="role-link" onClick={() => handleRoleChange('Sentinel')}>
+            Sentinel
+          </button>
+          <button className="role-link" onClick={() => handleRoleChange('Initiator')}>
+            Initiator
+          </button>
+        </div>
+      </nav>
       <div className="card-container">
-        {data && data.map(agent => (
-          <div key={agent.uuid} className="card">
-            <img className="card-image" src={agent.bustPortrait} alt={agent.displayName} />
-            <div className="card-overlay">
-              <h2 className="card-name">{agent.displayName}</h2>
+        {filteredAgents.length > 0 ? (
+          filteredAgents.map(agent => (
+            <div key={agent.uuid} className="card">
+              <img className="card-image" src={agent.bustPortrait} alt={agent.displayName} />
+              <div className="card-overlay">
+                <h2 className="card-name">{agent.displayName}</h2>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No agents found.</p>
+        )}
       </div>
       <footer className="App-footer"></footer>
     </div>
