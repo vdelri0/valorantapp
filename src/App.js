@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Input } from '@chakra-ui/react';
 import './App.css'; // Import CSS file for styling
 
 function App() {
@@ -64,7 +65,15 @@ function App() {
       <nav className="navbar">
         <div className="search-bar">
           <label htmlFor="search-input">Search:</label>
-          <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} />
+            <Input
+              size='md'
+              type="text"
+              id="search-input"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search"
+            />
+          {/* <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} /> */}
         </div>
         <div className="role-navbar">
           <button className="role-link" onClick={() => handleRoleChange('')}>
