@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from '@chakra-ui/react';
-import './App.css'; // Import CSS file for styling
+import { linksNavbar, roles, api } from './Constants';
+import Header from './header';
+import Main from './Main';
+import './App.css';
+
 
 function App() {
   const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/agents?is_playable=true', {
+        const response = await fetch(api, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -35,78 +36,10 @@ function App() {
     fetchData();
   }, []);
 
-  const filteredAgents = data.filter(agent => {
-    // Filter by search term
-    if (searchTerm && !agent.displayName.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
-    }
-
-    // Filter by selected role
-    if (selectedRole && agent.role.displayName !== selectedRole) {
-      return false;
-    }
-
-    return true;
-  });
-
-  const handleSearchChange = e => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleRoleChange = role => {
-    setSelectedRole(role);
-  };
-
   return (
     <div className="App">
-      <header className="App-logo">
-        <h1>One Tap</h1>
-      </header>
-      <nav className="navbar">
-        <div className="search-bar">
-          <label htmlFor="search-input">Search:</label>
-            <Input
-              size='md'
-              type="text"
-              id="search-input"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              placeholder="Search"
-            />
-          {/* <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} /> */}
-        </div>
-        <div className="role-navbar">
-          <button className="role-link" onClick={() => handleRoleChange('')}>
-            All
-          </button>
-          <button className="role-link" onClick={() => handleRoleChange('Duelist')}>
-            Duelist
-          </button>
-          <button className="role-link" onClick={() => handleRoleChange('Controller')}>
-            Controller
-          </button>
-          <button className="role-link" onClick={() => handleRoleChange('Sentinel')}>
-            Sentinel
-          </button>
-          <button className="role-link" onClick={() => handleRoleChange('Initiator')}>
-            Initiator
-          </button>
-        </div>
-      </nav>
-      <div className="card-container">
-        {filteredAgents.length > 0 ? (
-          filteredAgents.map(agent => (
-            <div key={agent.uuid} className="card">
-              <img className="card-image" src={agent.bustPortrait} alt={agent.displayName} />
-              <div className="card-overlay">
-                <h2 className="card-name">{agent.displayName}</h2>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No agents found.</p>
-        )}
-      </div>
+      <Header links={linksNavbar}></Header>
+      <Main data={data} roles={roles}></Main>
       <footer className="App-footer"></footer>
     </div>
   );

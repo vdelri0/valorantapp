@@ -1,24 +1,47 @@
 .App {
   text-align: left;
-  font-size: 50px;
   background-color: #fff;
+}
+
+.App-header {
+  display: flex;
+  background-color: #1B1B1E;
 }
 
 .App-logo {
   display: flex;
   background-color: #1B1B1E;
-  height: 100px;
   padding: 20px;
   color: #fff;
 }
 
 .App-logo h1 {
   display: flex;
-
+  font-size: 50px;
   font-family: 'VALORANT', sans-serif;
 }
 
 .App-logo:hover h1 {
+  color: #FF4654;
+}
+
+.App-navbar {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding: 20px;
+}
+
+.App-navbar a {
+
+  color: #fff;
+  margin-left: 20px;
+  font-size: 30px;
+  font-family: 'VALORANT', sans-serif;
+
+}
+
+.App-navbar a:hover {
   color: #FF4654;
 }
 
