@@ -1,16 +1,25 @@
 .App {
-  text-align: center;
-  background-color: #f5f5f5;
+  text-align: left;
+  font-size: 50px;
+  background-color: #fff;
 }
 
-.App-header {
+.App-logo {
+  display: flex;
   background-color: #1B1B1E;
+  height: 100px;
   padding: 20px;
   color: #fff;
 }
 
-.App-header h1 {
+.App-logo h1 {
+  display: flex;
+
   font-family: 'VALORANT', sans-serif;
+}
+
+.App-logo:hover h1 {
+  color: #FF4654;
 }
 
 .navbar {
@@ -75,6 +84,7 @@
 }
 
 .card {
+  background-color: #FF4654;
   position: relative;
   width: 300px;
   height: 400px;

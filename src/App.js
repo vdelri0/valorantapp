@@ -59,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-logo">
         <h1>One Tap</h1>
       </header>
       <nav className="navbar">
